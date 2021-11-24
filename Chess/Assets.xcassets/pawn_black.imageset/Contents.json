@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "chess-pawn.png",
+      "filename" : "pawn_new.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "pawn_new-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "pawn_new-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

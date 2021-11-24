@@ -22,6 +22,8 @@ class GameField: UIView {
     private var cells: [[UIView]] = []
     private var isSelectCell = false
     
+    private var currentMoveChessKind = true
+    
     override func layoutSubviews() {
         setupSizeCell()
         setupCell()
@@ -112,91 +114,96 @@ class GameField: UIView {
     
     private func setupChessmens() {
         for item in 0..<8 {
-            let view = ChessManView(delegate: self, kind: .black, chessType: .pawn)
-            view.backgroundColor = .red
-            view.tag = 1
-            
-            getCell(x: item, y: 1)?.addSubview(view)
-            view.snp.makeConstraints { (make) in
-                make.center.equalToSuperview()
-                make.width.equalTo((width ?? 0.0) - 10.0)
-                make.height.equalTo((height ?? 0.0) - 10.0)
-            }
+            createChess(x: item, y: 1, kind: .black, chessType: .pawn)
         }
         
-        let viewhorse = ChessManView(delegate: self, kind: .black, chessType: .horse)
-        viewhorse.backgroundColor = .cyan
-        viewhorse.tag = 1
-    
-        getCell(x: 1, y: 0)?.addSubview(viewhorse)
-        viewhorse.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.width.equalTo((width ?? 0.0) - 10.0)
-            make.height.equalTo((height ?? 0.0) - 10.0)
-        }
-        
-        let viewhorseTwo = ChessManView(delegate: self, kind: .black, chessType: .horse)
-        viewhorseTwo.backgroundColor = .cyan
-        viewhorseTwo.tag = 1
-        getCell(x: 6, y: 0)?.addSubview(viewhorseTwo)
-        viewhorseTwo.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.width.equalTo((width ?? 0.0) - 10.0)
-            make.height.equalTo((height ?? 0.0) - 10.0)
-        }
+        createChess(x: 1, y: 0, kind: .black, chessType: .horse)
+        createChess(x: 6, y: 0, kind: .black, chessType: .horse)
 
+        createChess(x: 0, y: 0, kind: .black, chessType: .rook)
+        createChess(x: 7, y: 0, kind: .black, chessType: .rook)
         
+        createChess(x: 2, y: 0, kind: .black, chessType: .elephant)
+        createChess(x: 5, y: 0, kind: .black, chessType: .elephant)
+        
+        createChess(x: 3, y: 0, kind: .black, chessType: .king)
+        createChess(x: 4, y: 0, kind: .black, chessType: .queen)
+
         for item in 0..<8 {
-            let view = ChessManView(delegate: self, kind: .white, chessType: .pawn)
-            view.backgroundColor = .green
-            view.tag = 1
-            
-            getCell(x: item, y: 6)?.addSubview(view)
-            view.snp.makeConstraints { (make) in
-                make.center.equalToSuperview()
-                make.width.equalTo((width ?? 0.0) - 10.0)
-                make.height.equalTo((height ?? 0.0) - 10.0)
-            }
+            createChess(x: item, y: 6, kind: .white, chessType: .pawn)
         }
         
-        let viewhorseThree = ChessManView(delegate: self, kind: .white, chessType: .horse)
-        viewhorseThree.backgroundColor = .brown
-        viewhorseThree.tag = 1
+        createChess(x: 1, y: 7, kind: .white, chessType: .horse)
+        createChess(x: 6, y: 7, kind: .white, chessType: .horse)
+        
+        createChess(x: 0, y: 7, kind: .white, chessType: .rook)
+        createChess(x: 7, y: 7, kind: .white, chessType: .rook)
+
+        createChess(x: 2, y: 7, kind: .white, chessType: .elephant)
+        createChess(x: 5, y: 7, kind: .white, chessType: .elephant)
+        
+        createChess(x: 3, y: 7, kind: .white, chessType: .king)
+        createChess(x: 4, y: 7, kind: .white, chessType: .queen)
+    }
     
-        getCell(x: 6, y: 7)?.addSubview(viewhorseThree)
-        viewhorseThree.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.width.equalTo((width ?? 0.0) - 10.0)
-            make.height.equalTo((height ?? 0.0) - 10.0)
-        }
+    private func createChess(x: Int, y: Int , kind: Kind, chessType: ChessType) {
+        let chessman = ChessManView(delegate: self, kind: kind, chessType: chessType)
         
-        let viewhorseFour = ChessManView(delegate: self, kind: .white, chessType: .horse)
-        viewhorseFour.backgroundColor = .brown
-        viewhorseFour.tag = 1
-        getCell(x: 1, y: 7)?.addSubview(viewhorseFour)
-        viewhorseFour.snp.makeConstraints { (make) in
+        getCell(x: x, y: y)?.addSubview(chessman)
+        chessman.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.width.equalTo((width ?? 0.0) - 10.0)
-            make.height.equalTo((height ?? 0.0) - 10.0)
+            make.width.equalTo((width ?? 0.0))
+            make.height.equalTo((height ?? 0.0))
         }
-        
     }
     
     private var selectChessmens: ChessManView? = nil
     
     @objc func checkAction(sender: UITapGestureRecognizer) {
         let selectView = sender.view
+        
                 
-        if (selectView?.viewWithTag(1) != nil) {
-            if !isSelectCell {
+        if (selectView?.viewWithTag(1) != nil && currentMoveChessKind == (selectView?.viewWithTag(1) as? ChessManView)?.types) {
+            let chessman = selectView?.viewWithTag(1) as? ChessManView
+            
+            if chessman?.types == currentMoveChessKind {
+                currentMoveChessKind = !currentMoveChessKind
+                
                 isSelectCell = true
                 
-                selectChessmens = selectView?.viewWithTag(1) as? ChessManView
+                cellsWork.forEach { cell in
+                    cell.layer.borderWidth = 0
+                    cell.layer.borderColor = UIColor.clear.cgColor
+                }
+                
+                selectChessmens = chessman
                 
                 selectChessmens?.select()
                 
                 selectView?.layer.borderColor = UIColor.green.cgColor
                 selectView?.layer.borderWidth = 4
+            }
+        } else if isSelectCell && (selectView?.viewWithTag(1) as? ChessManView)?.types == selectChessmens?.types {
+            isSelectCell = false
+            
+            if let view = (selectView?.viewWithTag(1) as? ChessManView) {
+                selectView?.willRemoveSubview(view)
+            }
+            
+            if let selectChessmens = selectChessmens {
+                selectView?.addSubview(selectChessmens)
+                selectChessmens.snp.makeConstraints { (make) in
+                    make.center.equalToSuperview()
+                    make.width.equalTo((width ?? 0.0))
+                    make.height.equalTo((height ?? 0.0))
+                }
+                
+                self.selectChessmens = nil
+            }
+            
+            cellsWork.forEach { cell in
+                cell.layer.borderWidth = 0
+                cell.layer.borderColor = UIColor.clear.cgColor
             }
         } else if isSelectCell && (selectView?.layer.borderWidth ?? 0) == 4 {
             isSelectCell = false
@@ -210,13 +217,15 @@ class GameField: UIView {
                 selectView?.addSubview(selectChessmens)
                 selectChessmens.snp.makeConstraints { (make) in
                     make.center.equalToSuperview()
-                    make.width.equalTo((width ?? 0.0) - 10.0)
-                    make.height.equalTo((height ?? 0.0) - 10.0)
+                    make.width.equalTo((width ?? 0.0))
+                    make.height.equalTo((height ?? 0.0))
                 }
                 
                 self.selectChessmens = nil
             }
         }
+        
+        print("test")
     }
 }
 

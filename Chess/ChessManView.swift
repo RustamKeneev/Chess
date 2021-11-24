@@ -8,10 +8,11 @@
 import Foundation
 import UIKit
 
-class ChessManView: UIView {
+class ChessManView: UIImageView {
     
-    private var kind: Kind
+    var kind: Kind
     private var chessType: ChessType
+    var types: Bool
     
     private var isFirstSelect = true
     
@@ -26,32 +27,21 @@ class ChessManView: UIView {
         self.chessType = chessType
         self.id = Int.random(in: Int.min...Int.max)
         
-//        switch kind {
-//        case .black:
-//            switch chessType {
-//            case .pawn:
-//                image = UIImage("black pawn")
-//                break
-//            case .horse:
-//                image = UIImage("black horse")
-//                break
-//            }
-//            break
-//        case .white:
-//            switch chessType {
-//            case .pawn:
-//                image = UIImage("white pawn")
-//
-//                break
-//            case .horse:
-//                image = UIImage("white horse")
-//
-//                break
-//            }
-//            break
-//        }
+        switch kind {
+        case .black:
+            types = false
+            break
+        case .white:
+            types = true
+            break
+        }
         
         super.init(frame: .zero)
+        
+        self.image = UIImage(named: "\(chessType.rawValue)_\(kind.rawValue)")
+        tag = 1
+        
+        contentMode = .scaleAspectFit
         
         self.delegate = delegate
     }
@@ -85,6 +75,165 @@ class ChessManView: UIView {
                 moves.append(Move(valueX: 2, valueY: 1))
                 moves.append(Move(valueX: 2, valueY: -1))
                 break
+            case .rook:
+                moves.append(Move(valueX: 0, valueY: 0))
+                moves.append(Move(valueX: 0, valueY: 1))
+                moves.append(Move(valueX: 0, valueY: 2))
+                moves.append(Move(valueX: 0, valueY: 3))
+                moves.append(Move(valueX: 0, valueY: 4))
+                moves.append(Move(valueX: 0, valueY: 5))
+                moves.append(Move(valueX: 0, valueY: 6))
+                moves.append(Move(valueX: 0, valueY: 7))
+
+                moves.append(Move(valueX: 0, valueY: -0))
+                moves.append(Move(valueX: 0, valueY: -1))
+                moves.append(Move(valueX: 0, valueY: -2))
+                moves.append(Move(valueX: 0, valueY: -3))
+                moves.append(Move(valueX: 0, valueY: -4))
+                moves.append(Move(valueX: 0, valueY: -5))
+                moves.append(Move(valueX: 0, valueY: -6))
+                moves.append(Move(valueX: 0, valueY: -7))
+
+                moves.append(Move(valueX: 0, valueY: 0))
+                moves.append(Move(valueX: 1, valueY: 0))
+                moves.append(Move(valueX: 2, valueY: 0))
+                moves.append(Move(valueX: 3, valueY: 0))
+                moves.append(Move(valueX: 4, valueY: 0))
+                moves.append(Move(valueX: 5, valueY: 0))
+                moves.append(Move(valueX: 6, valueY: 0))
+                moves.append(Move(valueX: 7, valueY: 0))
+                
+                moves.append(Move(valueX: -0, valueY: 0))
+                moves.append(Move(valueX: -1, valueY: 0))
+                moves.append(Move(valueX: -2, valueY: 0))
+                moves.append(Move(valueX: -3, valueY: 0))
+                moves.append(Move(valueX: -4, valueY: 0))
+                moves.append(Move(valueX: -5, valueY: 0))
+                moves.append(Move(valueX: -6, valueY: 0))
+                moves.append(Move(valueX: -7, valueY: 0))
+                break
+            case .elephant:
+                moves.append(Move(valueX: 0, valueY: 0))
+                moves.append(Move(valueX: 1, valueY: 1))
+                moves.append(Move(valueX: 2, valueY: 2))
+                moves.append(Move(valueX: 3, valueY: 3))
+                moves.append(Move(valueX: 4, valueY: 4))
+                moves.append(Move(valueX: 5, valueY: 5))
+                moves.append(Move(valueX: 6, valueY: 6))
+                moves.append(Move(valueX: 7, valueY: 7))
+                
+                moves.append(Move(valueX: -0, valueY: -0))
+                moves.append(Move(valueX: -1, valueY: -1))
+                moves.append(Move(valueX: -2, valueY: -2))
+                moves.append(Move(valueX: -3, valueY: -3))
+                moves.append(Move(valueX: -4, valueY: -4))
+                moves.append(Move(valueX: -5, valueY: -5))
+                moves.append(Move(valueX: -6, valueY: -6))
+                moves.append(Move(valueX: -7, valueY: -7))
+
+                moves.append(Move(valueX: 0, valueY: -0))
+                moves.append(Move(valueX: 1, valueY: -1))
+                moves.append(Move(valueX: 2, valueY: -2))
+                moves.append(Move(valueX: 3, valueY: -3))
+                moves.append(Move(valueX: 4, valueY: -4))
+                moves.append(Move(valueX: 5, valueY: -5))
+                moves.append(Move(valueX: 6, valueY: -6))
+                moves.append(Move(valueX: 7, valueY: -7))
+                
+                moves.append(Move(valueX: -0, valueY: 0))
+                moves.append(Move(valueX: -1, valueY: 1))
+                moves.append(Move(valueX: -2, valueY: 2))
+                moves.append(Move(valueX: -3, valueY: 3))
+                moves.append(Move(valueX: -4, valueY: 4))
+                moves.append(Move(valueX: -5, valueY: 5))
+                moves.append(Move(valueX: -6, valueY: 6))
+                moves.append(Move(valueX: -7, valueY: 7))
+                break
+            case .king:
+                moves.append(Move(valueX: 0, valueY: -1))
+                moves.append(Move(valueX: 0, valueY: 1))
+                moves.append(Move(valueX: -1, valueY: 0))
+                moves.append(Move(valueX: 1, valueY: 0))
+                
+                moves.append(Move(valueX: -1, valueY: -1))
+                moves.append(Move(valueX: 1, valueY: 1))
+                moves.append(Move(valueX: -1, valueY: 1))
+                moves.append(Move(valueX: 1, valueY: -1))
+                
+                break
+            case .queen:
+                moves.append(Move(valueX: 0, valueY: 0))
+                moves.append(Move(valueX: 1, valueY: 1))
+                moves.append(Move(valueX: 2, valueY: 2))
+                moves.append(Move(valueX: 3, valueY: 3))
+                moves.append(Move(valueX: 4, valueY: 4))
+                moves.append(Move(valueX: 5, valueY: 5))
+                moves.append(Move(valueX: 6, valueY: 6))
+                moves.append(Move(valueX: 7, valueY: 7))
+                
+                moves.append(Move(valueX: -0, valueY: -0))
+                moves.append(Move(valueX: -1, valueY: -1))
+                moves.append(Move(valueX: -2, valueY: -2))
+                moves.append(Move(valueX: -3, valueY: -3))
+                moves.append(Move(valueX: -4, valueY: -4))
+                moves.append(Move(valueX: -5, valueY: -5))
+                moves.append(Move(valueX: -6, valueY: -6))
+                moves.append(Move(valueX: -7, valueY: -7))
+
+                moves.append(Move(valueX: 0, valueY: -0))
+                moves.append(Move(valueX: 1, valueY: -1))
+                moves.append(Move(valueX: 2, valueY: -2))
+                moves.append(Move(valueX: 3, valueY: -3))
+                moves.append(Move(valueX: 4, valueY: -4))
+                moves.append(Move(valueX: 5, valueY: -5))
+                moves.append(Move(valueX: 6, valueY: -6))
+                moves.append(Move(valueX: 7, valueY: -7))
+                
+                moves.append(Move(valueX: -0, valueY: 0))
+                moves.append(Move(valueX: -1, valueY: 1))
+                moves.append(Move(valueX: -2, valueY: 2))
+                moves.append(Move(valueX: -3, valueY: 3))
+                moves.append(Move(valueX: -4, valueY: 4))
+                moves.append(Move(valueX: -5, valueY: 5))
+                moves.append(Move(valueX: -6, valueY: 6))
+                moves.append(Move(valueX: -7, valueY: 7))
+                
+                moves.append(Move(valueX: 0, valueY: 0))
+                moves.append(Move(valueX: 0, valueY: 1))
+                moves.append(Move(valueX: 0, valueY: 2))
+                moves.append(Move(valueX: 0, valueY: 3))
+                moves.append(Move(valueX: 0, valueY: 4))
+                moves.append(Move(valueX: 0, valueY: 5))
+                moves.append(Move(valueX: 0, valueY: 6))
+                moves.append(Move(valueX: 0, valueY: 7))
+
+                moves.append(Move(valueX: 0, valueY: -0))
+                moves.append(Move(valueX: 0, valueY: -1))
+                moves.append(Move(valueX: 0, valueY: -2))
+                moves.append(Move(valueX: 0, valueY: -3))
+                moves.append(Move(valueX: 0, valueY: -4))
+                moves.append(Move(valueX: 0, valueY: -5))
+                moves.append(Move(valueX: 0, valueY: -6))
+                moves.append(Move(valueX: 0, valueY: -7))
+
+                moves.append(Move(valueX: 0, valueY: 0))
+                moves.append(Move(valueX: 1, valueY: 0))
+                moves.append(Move(valueX: 2, valueY: 0))
+                moves.append(Move(valueX: 3, valueY: 0))
+                moves.append(Move(valueX: 4, valueY: 0))
+                moves.append(Move(valueX: 5, valueY: 0))
+                moves.append(Move(valueX: 6, valueY: 0))
+                moves.append(Move(valueX: 7, valueY: 0))
+                
+                moves.append(Move(valueX: -0, valueY: 0))
+                moves.append(Move(valueX: -1, valueY: 0))
+                moves.append(Move(valueX: -2, valueY: 0))
+                moves.append(Move(valueX: -3, valueY: 0))
+                moves.append(Move(valueX: -4, valueY: 0))
+                moves.append(Move(valueX: -5, valueY: 0))
+                moves.append(Move(valueX: -6, valueY: 0))
+                moves.append(Move(valueX: -7, valueY: 0))
+                break
             }
             break
         case .white:
@@ -110,6 +259,159 @@ class ChessManView: UIView {
                 moves.append(Move(valueX: 2, valueY: 1))
                 moves.append(Move(valueX: 2, valueY: -1))
                 break
+            case .rook:
+                moves.append(Move(valueX: 0, valueY: 1))
+                moves.append(Move(valueX: 0, valueY: 2))
+                moves.append(Move(valueX: 0, valueY: 3))
+                moves.append(Move(valueX: 0, valueY: 4))
+                moves.append(Move(valueX: 0, valueY: 5))
+                moves.append(Move(valueX: 0, valueY: 6))
+                moves.append(Move(valueX: 0, valueY: 7))
+
+                moves.append(Move(valueX: 0, valueY: -1))
+                moves.append(Move(valueX: 0, valueY: -2))
+                moves.append(Move(valueX: 0, valueY: -3))
+                moves.append(Move(valueX: 0, valueY: -4))
+                moves.append(Move(valueX: 0, valueY: -5))
+                moves.append(Move(valueX: 0, valueY: -6))
+                moves.append(Move(valueX: 0, valueY: -7))
+
+                moves.append(Move(valueX: 1, valueY: 0))
+                moves.append(Move(valueX: 2, valueY: 0))
+                moves.append(Move(valueX: 3, valueY: 0))
+                moves.append(Move(valueX: 4, valueY: 0))
+                moves.append(Move(valueX: 5, valueY: 0))
+                moves.append(Move(valueX: 6, valueY: 0))
+                moves.append(Move(valueX: 7, valueY: 0))
+                
+                moves.append(Move(valueX: -1, valueY: 0))
+                moves.append(Move(valueX: -2, valueY: 0))
+                moves.append(Move(valueX: -3, valueY: 0))
+                moves.append(Move(valueX: -4, valueY: 0))
+                moves.append(Move(valueX: -5, valueY: 0))
+                moves.append(Move(valueX: -6, valueY: 0))
+                moves.append(Move(valueX: -7, valueY: 0))
+                
+                
+                break
+            case .elephant:
+                moves.append(Move(valueX: 1, valueY: 1))
+                moves.append(Move(valueX: 2, valueY: 2))
+                moves.append(Move(valueX: 3, valueY: 3))
+                moves.append(Move(valueX: 4, valueY: 4))
+                moves.append(Move(valueX: 5, valueY: 5))
+                moves.append(Move(valueX: 6, valueY: 6))
+                moves.append(Move(valueX: 7, valueY: 7))
+                
+                moves.append(Move(valueX: -1, valueY: -1))
+                moves.append(Move(valueX: -2, valueY: -2))
+                moves.append(Move(valueX: -3, valueY: -3))
+                moves.append(Move(valueX: -4, valueY: -4))
+                moves.append(Move(valueX: -5, valueY: -5))
+                moves.append(Move(valueX: -6, valueY: -6))
+                moves.append(Move(valueX: -7, valueY: -7))
+
+                moves.append(Move(valueX: 1, valueY: -1))
+                moves.append(Move(valueX: 2, valueY: -2))
+                moves.append(Move(valueX: 3, valueY: -3))
+                moves.append(Move(valueX: 4, valueY: -4))
+                moves.append(Move(valueX: 5, valueY: -5))
+                moves.append(Move(valueX: 6, valueY: -6))
+                moves.append(Move(valueX: 7, valueY: -7))
+                
+                moves.append(Move(valueX: -1, valueY: 1))
+                moves.append(Move(valueX: -2, valueY: 2))
+                moves.append(Move(valueX: -3, valueY: 3))
+                moves.append(Move(valueX: -4, valueY: 4))
+                moves.append(Move(valueX: -5, valueY: 5))
+                moves.append(Move(valueX: -6, valueY: 6))
+                moves.append(Move(valueX: -7, valueY: 7))
+                break
+            case .king:
+                moves.append(Move(valueX: 0, valueY: -1))
+                moves.append(Move(valueX: 0, valueY: 1))
+                moves.append(Move(valueX: -1, valueY: 0))
+                moves.append(Move(valueX: 1, valueY: 0))
+                
+                moves.append(Move(valueX: -1, valueY: -1))
+                moves.append(Move(valueX: 1, valueY: 1))
+                moves.append(Move(valueX: -1, valueY: 1))
+                moves.append(Move(valueX: 1, valueY: -1))
+                break
+            case .queen:
+                
+                moves.append(Move(valueX: 0, valueY: 0))
+                moves.append(Move(valueX: 1, valueY: 1))
+                moves.append(Move(valueX: 2, valueY: 2))
+                moves.append(Move(valueX: 3, valueY: 3))
+                moves.append(Move(valueX: 4, valueY: 4))
+                moves.append(Move(valueX: 5, valueY: 5))
+                moves.append(Move(valueX: 6, valueY: 6))
+                moves.append(Move(valueX: 7, valueY: 7))
+                
+                moves.append(Move(valueX: -0, valueY: -0))
+                moves.append(Move(valueX: -1, valueY: -1))
+                moves.append(Move(valueX: -2, valueY: -2))
+                moves.append(Move(valueX: -3, valueY: -3))
+                moves.append(Move(valueX: -4, valueY: -4))
+                moves.append(Move(valueX: -5, valueY: -5))
+                moves.append(Move(valueX: -6, valueY: -6))
+                moves.append(Move(valueX: -7, valueY: -7))
+
+                moves.append(Move(valueX: 0, valueY: -0))
+                moves.append(Move(valueX: 1, valueY: -1))
+                moves.append(Move(valueX: 2, valueY: -2))
+                moves.append(Move(valueX: 3, valueY: -3))
+                moves.append(Move(valueX: 4, valueY: -4))
+                moves.append(Move(valueX: 5, valueY: -5))
+                moves.append(Move(valueX: 6, valueY: -6))
+                moves.append(Move(valueX: 7, valueY: -7))
+                
+                moves.append(Move(valueX: -0, valueY: 0))
+                moves.append(Move(valueX: -1, valueY: 1))
+                moves.append(Move(valueX: -2, valueY: 2))
+                moves.append(Move(valueX: -3, valueY: 3))
+                moves.append(Move(valueX: -4, valueY: 4))
+                moves.append(Move(valueX: -5, valueY: 5))
+                moves.append(Move(valueX: -6, valueY: 6))
+                moves.append(Move(valueX: -7, valueY: 7))
+                
+                moves.append(Move(valueX: 0, valueY: 0))
+                moves.append(Move(valueX: 0, valueY: 1))
+                moves.append(Move(valueX: 0, valueY: 2))
+                moves.append(Move(valueX: 0, valueY: 3))
+                moves.append(Move(valueX: 0, valueY: 4))
+                moves.append(Move(valueX: 0, valueY: 5))
+                moves.append(Move(valueX: 0, valueY: 6))
+                moves.append(Move(valueX: 0, valueY: 7))
+
+                moves.append(Move(valueX: 0, valueY: -0))
+                moves.append(Move(valueX: 0, valueY: -1))
+                moves.append(Move(valueX: 0, valueY: -2))
+                moves.append(Move(valueX: 0, valueY: -3))
+                moves.append(Move(valueX: 0, valueY: -4))
+                moves.append(Move(valueX: 0, valueY: -5))
+                moves.append(Move(valueX: 0, valueY: -6))
+                moves.append(Move(valueX: 0, valueY: -7))
+
+                moves.append(Move(valueX: 0, valueY: 0))
+                moves.append(Move(valueX: 1, valueY: 0))
+                moves.append(Move(valueX: 2, valueY: 0))
+                moves.append(Move(valueX: 3, valueY: 0))
+                moves.append(Move(valueX: 4, valueY: 0))
+                moves.append(Move(valueX: 5, valueY: 0))
+                moves.append(Move(valueX: 6, valueY: 0))
+                moves.append(Move(valueX: 7, valueY: 0))
+                
+                moves.append(Move(valueX: -0, valueY: 0))
+                moves.append(Move(valueX: -1, valueY: 0))
+                moves.append(Move(valueX: -2, valueY: 0))
+                moves.append(Move(valueX: -3, valueY: 0))
+                moves.append(Move(valueX: -4, valueY: 0))
+                moves.append(Move(valueX: -5, valueY: 0))
+                moves.append(Move(valueX: -6, valueY: 0))
+                moves.append(Move(valueX: -7, valueY: 0))
+                break
             }
             break
         }
@@ -119,16 +421,20 @@ class ChessManView: UIView {
         
         isFirstSelect = false
     }
-    
-    enum Kind {
-        case white
-        case black
-    }
-    
-    enum ChessType {
-        case pawn
-        case horse
-    }
+}
+
+public enum Kind: String {
+    case white = "white"
+    case black = "black"
+}
+
+public enum ChessType: String {
+    case pawn = "pawn"
+    case horse = "horse"
+    case rook = "rook"
+    case elephant = "elephant"
+    case king = "king"
+    case queen = "queen"
 }
 
 protocol ChessManDelegate {
