@@ -11,12 +11,12 @@ import UIKit
 class ChessManView: UIImageView {
     
     var kind: Kind
-    private var chessType: ChessType
+    var chessType: ChessType
     var types: Bool
     
     private var isFirstSelect = true
     
-    private var moves: [Move] = []
+    private var moves: [[Move]] = []
     
     private lazy var delegate: ChessManDelegate? = nil
     
@@ -55,362 +55,384 @@ class ChessManView: UIImageView {
         case .black:
             switch chessType {
             case .pawn:
+                var move: [Move] = []
+                
                 if isFirstSelect {
-                    moves.append(Move(valueX: 0, valueY: -2))
-                    moves.append(Move(valueX: 0, valueY: -1))
+                    move.append(Move(valueX: 0, valueY: -2))
+                    move.append(Move(valueX: 0, valueY: -1))
                 } else {
-                    moves.append(Move(valueX: 0, valueY: -1))
+                    move.append(Move(valueX: 0, valueY: -1))
                 }
+                moves.append(move)
                 break
             case .horse:
-                moves.append(Move(valueX: 1, valueY: -2))
-                moves.append(Move(valueX: -1, valueY: -2))
+                var move: [Move] = []
                 
-                moves.append(Move(valueX: -2, valueY: 1))
-                moves.append(Move(valueX: -2, valueY: -1))
+                move.append(Move(valueX: 1, valueY: -2))
+                move.append(Move(valueX: -1, valueY: -2))
                 
-                moves.append(Move(valueX: 1, valueY: 2))
-                moves.append(Move(valueX: -1, valueY: 2))
+                move.append(Move(valueX: -2, valueY: 1))
+                move.append(Move(valueX: -2, valueY: -1))
+                
+                move.append(Move(valueX: 1, valueY: 2))
+                move.append(Move(valueX: -1, valueY: 2))
 
-                moves.append(Move(valueX: 2, valueY: 1))
-                moves.append(Move(valueX: 2, valueY: -1))
+                move.append(Move(valueX: 2, valueY: 1))
+                move.append(Move(valueX: 2, valueY: -1))
+                
+                moves.append(move)
                 break
             case .rook:
-                moves.append(Move(valueX: 0, valueY: 0))
-                moves.append(Move(valueX: 0, valueY: 1))
-                moves.append(Move(valueX: 0, valueY: 2))
-                moves.append(Move(valueX: 0, valueY: 3))
-                moves.append(Move(valueX: 0, valueY: 4))
-                moves.append(Move(valueX: 0, valueY: 5))
-                moves.append(Move(valueX: 0, valueY: 6))
-                moves.append(Move(valueX: 0, valueY: 7))
+                var move1: [Move] = []
+                var move2: [Move] = []
+                var move3: [Move] = []
+                var move4: [Move] = []
 
-                moves.append(Move(valueX: 0, valueY: -0))
-                moves.append(Move(valueX: 0, valueY: -1))
-                moves.append(Move(valueX: 0, valueY: -2))
-                moves.append(Move(valueX: 0, valueY: -3))
-                moves.append(Move(valueX: 0, valueY: -4))
-                moves.append(Move(valueX: 0, valueY: -5))
-                moves.append(Move(valueX: 0, valueY: -6))
-                moves.append(Move(valueX: 0, valueY: -7))
+                move1.append(Move(valueX: 0, valueY: 1))
+                move1.append(Move(valueX: 0, valueY: 2))
+                move1.append(Move(valueX: 0, valueY: 3))
+                move1.append(Move(valueX: 0, valueY: 4))
+                move1.append(Move(valueX: 0, valueY: 5))
+                move1.append(Move(valueX: 0, valueY: 6))
+                move1.append(Move(valueX: 0, valueY: 7))
 
-                moves.append(Move(valueX: 0, valueY: 0))
-                moves.append(Move(valueX: 1, valueY: 0))
-                moves.append(Move(valueX: 2, valueY: 0))
-                moves.append(Move(valueX: 3, valueY: 0))
-                moves.append(Move(valueX: 4, valueY: 0))
-                moves.append(Move(valueX: 5, valueY: 0))
-                moves.append(Move(valueX: 6, valueY: 0))
-                moves.append(Move(valueX: 7, valueY: 0))
+                move2.append(Move(valueX: 0, valueY: -1))
+                move2.append(Move(valueX: 0, valueY: -2))
+                move2.append(Move(valueX: 0, valueY: -3))
+                move2.append(Move(valueX: 0, valueY: -4))
+                move2.append(Move(valueX: 0, valueY: -5))
+                move2.append(Move(valueX: 0, valueY: -6))
+                move2.append(Move(valueX: 0, valueY: -7))
+
+                move3.append(Move(valueX: 1, valueY: 0))
+                move3.append(Move(valueX: 2, valueY: 0))
+                move3.append(Move(valueX: 3, valueY: 0))
+                move3.append(Move(valueX: 4, valueY: 0))
+                move3.append(Move(valueX: 5, valueY: 0))
+                move3.append(Move(valueX: 6, valueY: 0))
+                move3.append(Move(valueX: 7, valueY: 0))
+
+                move4.append(Move(valueX: -1, valueY: 0))
+                move4.append(Move(valueX: -2, valueY: 0))
+                move4.append(Move(valueX: -3, valueY: 0))
+                move4.append(Move(valueX: -4, valueY: 0))
+                move4.append(Move(valueX: -5, valueY: 0))
+                move4.append(Move(valueX: -6, valueY: 0))
+                move4.append(Move(valueX: -7, valueY: 0))
                 
-                moves.append(Move(valueX: -0, valueY: 0))
-                moves.append(Move(valueX: -1, valueY: 0))
-                moves.append(Move(valueX: -2, valueY: 0))
-                moves.append(Move(valueX: -3, valueY: 0))
-                moves.append(Move(valueX: -4, valueY: 0))
-                moves.append(Move(valueX: -5, valueY: 0))
-                moves.append(Move(valueX: -6, valueY: 0))
-                moves.append(Move(valueX: -7, valueY: 0))
+                moves.append(move1)
+                moves.append(move2)
+                moves.append(move3)
+                moves.append(move4)
                 break
             case .elephant:
-                moves.append(Move(valueX: 0, valueY: 0))
-                moves.append(Move(valueX: 1, valueY: 1))
-                moves.append(Move(valueX: 2, valueY: 2))
-                moves.append(Move(valueX: 3, valueY: 3))
-                moves.append(Move(valueX: 4, valueY: 4))
-                moves.append(Move(valueX: 5, valueY: 5))
-                moves.append(Move(valueX: 6, valueY: 6))
-                moves.append(Move(valueX: 7, valueY: 7))
+                var move1: [Move] = []
+                var move2: [Move] = []
+                var move3: [Move] = []
+                var move4: [Move] = []
                 
-                moves.append(Move(valueX: -0, valueY: -0))
-                moves.append(Move(valueX: -1, valueY: -1))
-                moves.append(Move(valueX: -2, valueY: -2))
-                moves.append(Move(valueX: -3, valueY: -3))
-                moves.append(Move(valueX: -4, valueY: -4))
-                moves.append(Move(valueX: -5, valueY: -5))
-                moves.append(Move(valueX: -6, valueY: -6))
-                moves.append(Move(valueX: -7, valueY: -7))
-
-                moves.append(Move(valueX: 0, valueY: -0))
-                moves.append(Move(valueX: 1, valueY: -1))
-                moves.append(Move(valueX: 2, valueY: -2))
-                moves.append(Move(valueX: 3, valueY: -3))
-                moves.append(Move(valueX: 4, valueY: -4))
-                moves.append(Move(valueX: 5, valueY: -5))
-                moves.append(Move(valueX: 6, valueY: -6))
-                moves.append(Move(valueX: 7, valueY: -7))
+                move1.append(Move(valueX: 1, valueY: 1))
+                move1.append(Move(valueX: 2, valueY: 2))
+                move1.append(Move(valueX: 3, valueY: 3))
+                move1.append(Move(valueX: 4, valueY: 4))
+                move1.append(Move(valueX: 5, valueY: 5))
+                move1.append(Move(valueX: 6, valueY: 6))
+                move1.append(Move(valueX: 7, valueY: 7))
+//
+                move2.append(Move(valueX: -1, valueY: -1))
+                move2.append(Move(valueX: -2, valueY: -2))
+                move2.append(Move(valueX: -3, valueY: -3))
+                move2.append(Move(valueX: -4, valueY: -4))
+                move2.append(Move(valueX: -5, valueY: -5))
+                move2.append(Move(valueX: -6, valueY: -6))
+                move2.append(Move(valueX: -7, valueY: -7))
+//
+                move3.append(Move(valueX: 1, valueY: -1))
+                move3.append(Move(valueX: 2, valueY: -2))
+                move3.append(Move(valueX: 3, valueY: -3))
+                move3.append(Move(valueX: 4, valueY: -4))
+                move3.append(Move(valueX: 5, valueY: -5))
+                move3.append(Move(valueX: 6, valueY: -6))
+                move3.append(Move(valueX: 7, valueY: -7))
+//
+                move4.append(Move(valueX: -1, valueY: 1))
+                move4.append(Move(valueX: -2, valueY: 2))
+                move4.append(Move(valueX: -3, valueY: 3))
+                move4.append(Move(valueX: -4, valueY: 4))
+                move4.append(Move(valueX: -5, valueY: 5))
+                move4.append(Move(valueX: -6, valueY: 6))
+                move4.append(Move(valueX: -7, valueY: 7))
                 
-                moves.append(Move(valueX: -0, valueY: 0))
-                moves.append(Move(valueX: -1, valueY: 1))
-                moves.append(Move(valueX: -2, valueY: 2))
-                moves.append(Move(valueX: -3, valueY: 3))
-                moves.append(Move(valueX: -4, valueY: 4))
-                moves.append(Move(valueX: -5, valueY: 5))
-                moves.append(Move(valueX: -6, valueY: 6))
-                moves.append(Move(valueX: -7, valueY: 7))
+                moves.append(move1)
+                moves.append(move2)
+                moves.append(move3)
+                moves.append(move4)
                 break
             case .king:
-                moves.append(Move(valueX: 0, valueY: -1))
-                moves.append(Move(valueX: 0, valueY: 1))
-                moves.append(Move(valueX: -1, valueY: 0))
-                moves.append(Move(valueX: 1, valueY: 0))
+                var move1: [Move] = []
+
+                move1.append(Move(valueX: 0, valueY: -1))
+                move1.append(Move(valueX: 0, valueY: 1))
+                move1.append(Move(valueX: -1, valueY: 0))
+                move1.append(Move(valueX: 1, valueY: 0))
+
+                move1.append(Move(valueX: -1, valueY: -1))
+                move1.append(Move(valueX: 1, valueY: 1))
+                move1.append(Move(valueX: -1, valueY: 1))
+                move1.append(Move(valueX: 1, valueY: -1))
                 
-                moves.append(Move(valueX: -1, valueY: -1))
-                moves.append(Move(valueX: 1, valueY: 1))
-                moves.append(Move(valueX: -1, valueY: 1))
-                moves.append(Move(valueX: 1, valueY: -1))
-                
+                moves.append(move1)
                 break
             case .queen:
-                moves.append(Move(valueX: 0, valueY: 0))
-                moves.append(Move(valueX: 1, valueY: 1))
-                moves.append(Move(valueX: 2, valueY: 2))
-                moves.append(Move(valueX: 3, valueY: 3))
-                moves.append(Move(valueX: 4, valueY: 4))
-                moves.append(Move(valueX: 5, valueY: 5))
-                moves.append(Move(valueX: 6, valueY: 6))
-                moves.append(Move(valueX: 7, valueY: 7))
-                
-                moves.append(Move(valueX: -0, valueY: -0))
-                moves.append(Move(valueX: -1, valueY: -1))
-                moves.append(Move(valueX: -2, valueY: -2))
-                moves.append(Move(valueX: -3, valueY: -3))
-                moves.append(Move(valueX: -4, valueY: -4))
-                moves.append(Move(valueX: -5, valueY: -5))
-                moves.append(Move(valueX: -6, valueY: -6))
-                moves.append(Move(valueX: -7, valueY: -7))
-
-                moves.append(Move(valueX: 0, valueY: -0))
-                moves.append(Move(valueX: 1, valueY: -1))
-                moves.append(Move(valueX: 2, valueY: -2))
-                moves.append(Move(valueX: 3, valueY: -3))
-                moves.append(Move(valueX: 4, valueY: -4))
-                moves.append(Move(valueX: 5, valueY: -5))
-                moves.append(Move(valueX: 6, valueY: -6))
-                moves.append(Move(valueX: 7, valueY: -7))
-                
-                moves.append(Move(valueX: -0, valueY: 0))
-                moves.append(Move(valueX: -1, valueY: 1))
-                moves.append(Move(valueX: -2, valueY: 2))
-                moves.append(Move(valueX: -3, valueY: 3))
-                moves.append(Move(valueX: -4, valueY: 4))
-                moves.append(Move(valueX: -5, valueY: 5))
-                moves.append(Move(valueX: -6, valueY: 6))
-                moves.append(Move(valueX: -7, valueY: 7))
-                
-                moves.append(Move(valueX: 0, valueY: 0))
-                moves.append(Move(valueX: 0, valueY: 1))
-                moves.append(Move(valueX: 0, valueY: 2))
-                moves.append(Move(valueX: 0, valueY: 3))
-                moves.append(Move(valueX: 0, valueY: 4))
-                moves.append(Move(valueX: 0, valueY: 5))
-                moves.append(Move(valueX: 0, valueY: 6))
-                moves.append(Move(valueX: 0, valueY: 7))
-
-                moves.append(Move(valueX: 0, valueY: -0))
-                moves.append(Move(valueX: 0, valueY: -1))
-                moves.append(Move(valueX: 0, valueY: -2))
-                moves.append(Move(valueX: 0, valueY: -3))
-                moves.append(Move(valueX: 0, valueY: -4))
-                moves.append(Move(valueX: 0, valueY: -5))
-                moves.append(Move(valueX: 0, valueY: -6))
-                moves.append(Move(valueX: 0, valueY: -7))
-
-                moves.append(Move(valueX: 0, valueY: 0))
-                moves.append(Move(valueX: 1, valueY: 0))
-                moves.append(Move(valueX: 2, valueY: 0))
-                moves.append(Move(valueX: 3, valueY: 0))
-                moves.append(Move(valueX: 4, valueY: 0))
-                moves.append(Move(valueX: 5, valueY: 0))
-                moves.append(Move(valueX: 6, valueY: 0))
-                moves.append(Move(valueX: 7, valueY: 0))
-                
-                moves.append(Move(valueX: -0, valueY: 0))
-                moves.append(Move(valueX: -1, valueY: 0))
-                moves.append(Move(valueX: -2, valueY: 0))
-                moves.append(Move(valueX: -3, valueY: 0))
-                moves.append(Move(valueX: -4, valueY: 0))
-                moves.append(Move(valueX: -5, valueY: 0))
-                moves.append(Move(valueX: -6, valueY: 0))
-                moves.append(Move(valueX: -7, valueY: 0))
+//                moves.append(Move(valueX: 0, valueY: 0))
+//                moves.append(Move(valueX: 1, valueY: 1))
+//                moves.append(Move(valueX: 2, valueY: 2))
+//                moves.append(Move(valueX: 3, valueY: 3))
+//                moves.append(Move(valueX: 4, valueY: 4))
+//                moves.append(Move(valueX: 5, valueY: 5))
+//                moves.append(Move(valueX: 6, valueY: 6))
+//                moves.append(Move(valueX: 7, valueY: 7))
+//
+//                moves.append(Move(valueX: -0, valueY: -0))
+//                moves.append(Move(valueX: -1, valueY: -1))
+//                moves.append(Move(valueX: -2, valueY: -2))
+//                moves.append(Move(valueX: -3, valueY: -3))
+//                moves.append(Move(valueX: -4, valueY: -4))
+//                moves.append(Move(valueX: -5, valueY: -5))
+//                moves.append(Move(valueX: -6, valueY: -6))
+//                moves.append(Move(valueX: -7, valueY: -7))
+//
+//                moves.append(Move(valueX: 0, valueY: -0))
+//                moves.append(Move(valueX: 1, valueY: -1))
+//                moves.append(Move(valueX: 2, valueY: -2))
+//                moves.append(Move(valueX: 3, valueY: -3))
+//                moves.append(Move(valueX: 4, valueY: -4))
+//                moves.append(Move(valueX: 5, valueY: -5))
+//                moves.append(Move(valueX: 6, valueY: -6))
+//                moves.append(Move(valueX: 7, valueY: -7))
+//
+//                moves.append(Move(valueX: -0, valueY: 0))
+//                moves.append(Move(valueX: -1, valueY: 1))
+//                moves.append(Move(valueX: -2, valueY: 2))
+//                moves.append(Move(valueX: -3, valueY: 3))
+//                moves.append(Move(valueX: -4, valueY: 4))
+//                moves.append(Move(valueX: -5, valueY: 5))
+//                moves.append(Move(valueX: -6, valueY: 6))
+//                moves.append(Move(valueX: -7, valueY: 7))
+//
+//                moves.append(Move(valueX: 0, valueY: 0))
+//                moves.append(Move(valueX: 0, valueY: 1))
+//                moves.append(Move(valueX: 0, valueY: 2))
+//                moves.append(Move(valueX: 0, valueY: 3))
+//                moves.append(Move(valueX: 0, valueY: 4))
+//                moves.append(Move(valueX: 0, valueY: 5))
+//                moves.append(Move(valueX: 0, valueY: 6))
+//                moves.append(Move(valueX: 0, valueY: 7))
+//
+//                moves.append(Move(valueX: 0, valueY: -0))
+//                moves.append(Move(valueX: 0, valueY: -1))
+//                moves.append(Move(valueX: 0, valueY: -2))
+//                moves.append(Move(valueX: 0, valueY: -3))
+//                moves.append(Move(valueX: 0, valueY: -4))
+//                moves.append(Move(valueX: 0, valueY: -5))
+//                moves.append(Move(valueX: 0, valueY: -6))
+//                moves.append(Move(valueX: 0, valueY: -7))
+//
+//                moves.append(Move(valueX: 0, valueY: 0))
+//                moves.append(Move(valueX: 1, valueY: 0))
+//                moves.append(Move(valueX: 2, valueY: 0))
+//                moves.append(Move(valueX: 3, valueY: 0))
+//                moves.append(Move(valueX: 4, valueY: 0))
+//                moves.append(Move(valueX: 5, valueY: 0))
+//                moves.append(Move(valueX: 6, valueY: 0))
+//                moves.append(Move(valueX: 7, valueY: 0))
+//
+//                moves.append(Move(valueX: -0, valueY: 0))
+//                moves.append(Move(valueX: -1, valueY: 0))
+//                moves.append(Move(valueX: -2, valueY: 0))
+//                moves.append(Move(valueX: -3, valueY: 0))
+//                moves.append(Move(valueX: -4, valueY: 0))
+//                moves.append(Move(valueX: -5, valueY: 0))
+//                moves.append(Move(valueX: -6, valueY: 0))
+//                moves.append(Move(valueX: -7, valueY: 0))
                 break
             }
             break
         case .white:
             switch chessType {
             case .pawn:
-                if isFirstSelect {
-                    moves.append(Move(valueX: 0, valueY: 2))
-                    moves.append(Move(valueX: 0, valueY: 1))
-                } else {
-                    moves.append(Move(valueX: 0, valueY: 1))
-                }
+//                if isFirstSelect {
+//                    moves.append(Move(valueX: 0, valueY: 2))
+//                    moves.append(Move(valueX: 0, valueY: 1))
+//                } else {
+//                    moves.append(Move(valueX: 0, valueY: 1))
+//                }
                 break
             case .horse:
-                moves.append(Move(valueX: 1, valueY: -2))
-                moves.append(Move(valueX: -1, valueY: -2))
-                
-                moves.append(Move(valueX: -2, valueY: 1))
-                moves.append(Move(valueX: -2, valueY: -1))
-                
-                moves.append(Move(valueX: 1, valueY: 2))
-                moves.append(Move(valueX: -1, valueY: 2))
-
-                moves.append(Move(valueX: 2, valueY: 1))
-                moves.append(Move(valueX: 2, valueY: -1))
+//                moves.append(Move(valueX: 1, valueY: -2))
+//                moves.append(Move(valueX: -1, valueY: -2))
+//
+//                moves.append(Move(valueX: -2, valueY: 1))
+//                moves.append(Move(valueX: -2, valueY: -1))
+//
+//                moves.append(Move(valueX: 1, valueY: 2))
+//                moves.append(Move(valueX: -1, valueY: 2))
+//
+//                moves.append(Move(valueX: 2, valueY: 1))
+//                moves.append(Move(valueX: 2, valueY: -1))
                 break
             case .rook:
-                moves.append(Move(valueX: 0, valueY: 1))
-                moves.append(Move(valueX: 0, valueY: 2))
-                moves.append(Move(valueX: 0, valueY: 3))
-                moves.append(Move(valueX: 0, valueY: 4))
-                moves.append(Move(valueX: 0, valueY: 5))
-                moves.append(Move(valueX: 0, valueY: 6))
-                moves.append(Move(valueX: 0, valueY: 7))
-
-                moves.append(Move(valueX: 0, valueY: -1))
-                moves.append(Move(valueX: 0, valueY: -2))
-                moves.append(Move(valueX: 0, valueY: -3))
-                moves.append(Move(valueX: 0, valueY: -4))
-                moves.append(Move(valueX: 0, valueY: -5))
-                moves.append(Move(valueX: 0, valueY: -6))
-                moves.append(Move(valueX: 0, valueY: -7))
-
-                moves.append(Move(valueX: 1, valueY: 0))
-                moves.append(Move(valueX: 2, valueY: 0))
-                moves.append(Move(valueX: 3, valueY: 0))
-                moves.append(Move(valueX: 4, valueY: 0))
-                moves.append(Move(valueX: 5, valueY: 0))
-                moves.append(Move(valueX: 6, valueY: 0))
-                moves.append(Move(valueX: 7, valueY: 0))
-                
-                moves.append(Move(valueX: -1, valueY: 0))
-                moves.append(Move(valueX: -2, valueY: 0))
-                moves.append(Move(valueX: -3, valueY: 0))
-                moves.append(Move(valueX: -4, valueY: 0))
-                moves.append(Move(valueX: -5, valueY: 0))
-                moves.append(Move(valueX: -6, valueY: 0))
-                moves.append(Move(valueX: -7, valueY: 0))
+//                moves.append(Move(valueX: 0, valueY: 1))
+//                moves.append(Move(valueX: 0, valueY: 2))
+//                moves.append(Move(valueX: 0, valueY: 3))
+//                moves.append(Move(valueX: 0, valueY: 4))
+//                moves.append(Move(valueX: 0, valueY: 5))
+//                moves.append(Move(valueX: 0, valueY: 6))
+//                moves.append(Move(valueX: 0, valueY: 7))
+//
+//                moves.append(Move(valueX: 0, valueY: -1))
+//                moves.append(Move(valueX: 0, valueY: -2))
+//                moves.append(Move(valueX: 0, valueY: -3))
+//                moves.append(Move(valueX: 0, valueY: -4))
+//                moves.append(Move(valueX: 0, valueY: -5))
+//                moves.append(Move(valueX: 0, valueY: -6))
+//                moves.append(Move(valueX: 0, valueY: -7))
+//
+//                moves.append(Move(valueX: 1, valueY: 0))
+//                moves.append(Move(valueX: 2, valueY: 0))
+//                moves.append(Move(valueX: 3, valueY: 0))
+//                moves.append(Move(valueX: 4, valueY: 0))
+//                moves.append(Move(valueX: 5, valueY: 0))
+//                moves.append(Move(valueX: 6, valueY: 0))
+//                moves.append(Move(valueX: 7, valueY: 0))
+//
+//                moves.append(Move(valueX: -1, valueY: 0))
+//                moves.append(Move(valueX: -2, valueY: 0))
+//                moves.append(Move(valueX: -3, valueY: 0))
+//                moves.append(Move(valueX: -4, valueY: 0))
+//                moves.append(Move(valueX: -5, valueY: 0))
+//                moves.append(Move(valueX: -6, valueY: 0))
+//                moves.append(Move(valueX: -7, valueY: 0))
                 
                 
                 break
             case .elephant:
-                moves.append(Move(valueX: 1, valueY: 1))
-                moves.append(Move(valueX: 2, valueY: 2))
-                moves.append(Move(valueX: 3, valueY: 3))
-                moves.append(Move(valueX: 4, valueY: 4))
-                moves.append(Move(valueX: 5, valueY: 5))
-                moves.append(Move(valueX: 6, valueY: 6))
-                moves.append(Move(valueX: 7, valueY: 7))
-                
-                moves.append(Move(valueX: -1, valueY: -1))
-                moves.append(Move(valueX: -2, valueY: -2))
-                moves.append(Move(valueX: -3, valueY: -3))
-                moves.append(Move(valueX: -4, valueY: -4))
-                moves.append(Move(valueX: -5, valueY: -5))
-                moves.append(Move(valueX: -6, valueY: -6))
-                moves.append(Move(valueX: -7, valueY: -7))
-
-                moves.append(Move(valueX: 1, valueY: -1))
-                moves.append(Move(valueX: 2, valueY: -2))
-                moves.append(Move(valueX: 3, valueY: -3))
-                moves.append(Move(valueX: 4, valueY: -4))
-                moves.append(Move(valueX: 5, valueY: -5))
-                moves.append(Move(valueX: 6, valueY: -6))
-                moves.append(Move(valueX: 7, valueY: -7))
-                
-                moves.append(Move(valueX: -1, valueY: 1))
-                moves.append(Move(valueX: -2, valueY: 2))
-                moves.append(Move(valueX: -3, valueY: 3))
-                moves.append(Move(valueX: -4, valueY: 4))
-                moves.append(Move(valueX: -5, valueY: 5))
-                moves.append(Move(valueX: -6, valueY: 6))
-                moves.append(Move(valueX: -7, valueY: 7))
+//                moves.append(Move(valueX: 1, valueY: 1))
+//                moves.append(Move(valueX: 2, valueY: 2))
+//                moves.append(Move(valueX: 3, valueY: 3))
+//                moves.append(Move(valueX: 4, valueY: 4))
+//                moves.append(Move(valueX: 5, valueY: 5))
+//                moves.append(Move(valueX: 6, valueY: 6))
+//                moves.append(Move(valueX: 7, valueY: 7))
+//
+//                moves.append(Move(valueX: -1, valueY: -1))
+//                moves.append(Move(valueX: -2, valueY: -2))
+//                moves.append(Move(valueX: -3, valueY: -3))
+//                moves.append(Move(valueX: -4, valueY: -4))
+//                moves.append(Move(valueX: -5, valueY: -5))
+//                moves.append(Move(valueX: -6, valueY: -6))
+//                moves.append(Move(valueX: -7, valueY: -7))
+//
+//                moves.append(Move(valueX: 1, valueY: -1))
+//                moves.append(Move(valueX: 2, valueY: -2))
+//                moves.append(Move(valueX: 3, valueY: -3))
+//                moves.append(Move(valueX: 4, valueY: -4))
+//                moves.append(Move(valueX: 5, valueY: -5))
+//                moves.append(Move(valueX: 6, valueY: -6))
+//                moves.append(Move(valueX: 7, valueY: -7))
+//
+//                moves.append(Move(valueX: -1, valueY: 1))
+//                moves.append(Move(valueX: -2, valueY: 2))
+//                moves.append(Move(valueX: -3, valueY: 3))
+//                moves.append(Move(valueX: -4, valueY: 4))
+//                moves.append(Move(valueX: -5, valueY: 5))
+//                moves.append(Move(valueX: -6, valueY: 6))
+//                moves.append(Move(valueX: -7, valueY: 7))
                 break
             case .king:
-                moves.append(Move(valueX: 0, valueY: -1))
-                moves.append(Move(valueX: 0, valueY: 1))
-                moves.append(Move(valueX: -1, valueY: 0))
-                moves.append(Move(valueX: 1, valueY: 0))
-                
-                moves.append(Move(valueX: -1, valueY: -1))
-                moves.append(Move(valueX: 1, valueY: 1))
-                moves.append(Move(valueX: -1, valueY: 1))
-                moves.append(Move(valueX: 1, valueY: -1))
+//                moves.append(Move(valueX: 0, valueY: -1))
+//                moves.append(Move(valueX: 0, valueY: 1))
+//                moves.append(Move(valueX: -1, valueY: 0))
+//                moves.append(Move(valueX: 1, valueY: 0))
+//
+//                moves.append(Move(valueX: -1, valueY: -1))
+//                moves.append(Move(valueX: 1, valueY: 1))
+//                moves.append(Move(valueX: -1, valueY: 1))
+//                moves.append(Move(valueX: 1, valueY: -1))
                 break
             case .queen:
                 
-                moves.append(Move(valueX: 0, valueY: 0))
-                moves.append(Move(valueX: 1, valueY: 1))
-                moves.append(Move(valueX: 2, valueY: 2))
-                moves.append(Move(valueX: 3, valueY: 3))
-                moves.append(Move(valueX: 4, valueY: 4))
-                moves.append(Move(valueX: 5, valueY: 5))
-                moves.append(Move(valueX: 6, valueY: 6))
-                moves.append(Move(valueX: 7, valueY: 7))
-                
-                moves.append(Move(valueX: -0, valueY: -0))
-                moves.append(Move(valueX: -1, valueY: -1))
-                moves.append(Move(valueX: -2, valueY: -2))
-                moves.append(Move(valueX: -3, valueY: -3))
-                moves.append(Move(valueX: -4, valueY: -4))
-                moves.append(Move(valueX: -5, valueY: -5))
-                moves.append(Move(valueX: -6, valueY: -6))
-                moves.append(Move(valueX: -7, valueY: -7))
-
-                moves.append(Move(valueX: 0, valueY: -0))
-                moves.append(Move(valueX: 1, valueY: -1))
-                moves.append(Move(valueX: 2, valueY: -2))
-                moves.append(Move(valueX: 3, valueY: -3))
-                moves.append(Move(valueX: 4, valueY: -4))
-                moves.append(Move(valueX: 5, valueY: -5))
-                moves.append(Move(valueX: 6, valueY: -6))
-                moves.append(Move(valueX: 7, valueY: -7))
-                
-                moves.append(Move(valueX: -0, valueY: 0))
-                moves.append(Move(valueX: -1, valueY: 1))
-                moves.append(Move(valueX: -2, valueY: 2))
-                moves.append(Move(valueX: -3, valueY: 3))
-                moves.append(Move(valueX: -4, valueY: 4))
-                moves.append(Move(valueX: -5, valueY: 5))
-                moves.append(Move(valueX: -6, valueY: 6))
-                moves.append(Move(valueX: -7, valueY: 7))
-                
-                moves.append(Move(valueX: 0, valueY: 0))
-                moves.append(Move(valueX: 0, valueY: 1))
-                moves.append(Move(valueX: 0, valueY: 2))
-                moves.append(Move(valueX: 0, valueY: 3))
-                moves.append(Move(valueX: 0, valueY: 4))
-                moves.append(Move(valueX: 0, valueY: 5))
-                moves.append(Move(valueX: 0, valueY: 6))
-                moves.append(Move(valueX: 0, valueY: 7))
-
-                moves.append(Move(valueX: 0, valueY: -0))
-                moves.append(Move(valueX: 0, valueY: -1))
-                moves.append(Move(valueX: 0, valueY: -2))
-                moves.append(Move(valueX: 0, valueY: -3))
-                moves.append(Move(valueX: 0, valueY: -4))
-                moves.append(Move(valueX: 0, valueY: -5))
-                moves.append(Move(valueX: 0, valueY: -6))
-                moves.append(Move(valueX: 0, valueY: -7))
-
-                moves.append(Move(valueX: 0, valueY: 0))
-                moves.append(Move(valueX: 1, valueY: 0))
-                moves.append(Move(valueX: 2, valueY: 0))
-                moves.append(Move(valueX: 3, valueY: 0))
-                moves.append(Move(valueX: 4, valueY: 0))
-                moves.append(Move(valueX: 5, valueY: 0))
-                moves.append(Move(valueX: 6, valueY: 0))
-                moves.append(Move(valueX: 7, valueY: 0))
-                
-                moves.append(Move(valueX: -0, valueY: 0))
-                moves.append(Move(valueX: -1, valueY: 0))
-                moves.append(Move(valueX: -2, valueY: 0))
-                moves.append(Move(valueX: -3, valueY: 0))
-                moves.append(Move(valueX: -4, valueY: 0))
-                moves.append(Move(valueX: -5, valueY: 0))
-                moves.append(Move(valueX: -6, valueY: 0))
-                moves.append(Move(valueX: -7, valueY: 0))
+//                moves.append(Move(valueX: 0, valueY: 0))
+//                moves.append(Move(valueX: 1, valueY: 1))
+//                moves.append(Move(valueX: 2, valueY: 2))
+//                moves.append(Move(valueX: 3, valueY: 3))
+//                moves.append(Move(valueX: 4, valueY: 4))
+//                moves.append(Move(valueX: 5, valueY: 5))
+//                moves.append(Move(valueX: 6, valueY: 6))
+//                moves.append(Move(valueX: 7, valueY: 7))
+//
+//                moves.append(Move(valueX: -0, valueY: -0))
+//                moves.append(Move(valueX: -1, valueY: -1))
+//                moves.append(Move(valueX: -2, valueY: -2))
+//                moves.append(Move(valueX: -3, valueY: -3))
+//                moves.append(Move(valueX: -4, valueY: -4))
+//                moves.append(Move(valueX: -5, valueY: -5))
+//                moves.append(Move(valueX: -6, valueY: -6))
+//                moves.append(Move(valueX: -7, valueY: -7))
+//
+//                moves.append(Move(valueX: 0, valueY: -0))
+//                moves.append(Move(valueX: 1, valueY: -1))
+//                moves.append(Move(valueX: 2, valueY: -2))
+//                moves.append(Move(valueX: 3, valueY: -3))
+//                moves.append(Move(valueX: 4, valueY: -4))
+//                moves.append(Move(valueX: 5, valueY: -5))
+//                moves.append(Move(valueX: 6, valueY: -6))
+//                moves.append(Move(valueX: 7, valueY: -7))
+//
+//                moves.append(Move(valueX: -0, valueY: 0))
+//                moves.append(Move(valueX: -1, valueY: 1))
+//                moves.append(Move(valueX: -2, valueY: 2))
+//                moves.append(Move(valueX: -3, valueY: 3))
+//                moves.append(Move(valueX: -4, valueY: 4))
+//                moves.append(Move(valueX: -5, valueY: 5))
+//                moves.append(Move(valueX: -6, valueY: 6))
+//                moves.append(Move(valueX: -7, valueY: 7))
+//
+//                moves.append(Move(valueX: 0, valueY: 0))
+//                moves.append(Move(valueX: 0, valueY: 1))
+//                moves.append(Move(valueX: 0, valueY: 2))
+//                moves.append(Move(valueX: 0, valueY: 3))
+//                moves.append(Move(valueX: 0, valueY: 4))
+//                moves.append(Move(valueX: 0, valueY: 5))
+//                moves.append(Move(valueX: 0, valueY: 6))
+//                moves.append(Move(valueX: 0, valueY: 7))
+//
+//                moves.append(Move(valueX: 0, valueY: -0))
+//                moves.append(Move(valueX: 0, valueY: -1))
+//                moves.append(Move(valueX: 0, valueY: -2))
+//                moves.append(Move(valueX: 0, valueY: -3))
+//                moves.append(Move(valueX: 0, valueY: -4))
+//                moves.append(Move(valueX: 0, valueY: -5))
+//                moves.append(Move(valueX: 0, valueY: -6))
+//                moves.append(Move(valueX: 0, valueY: -7))
+//
+//                moves.append(Move(valueX: 0, valueY: 0))
+//                moves.append(Move(valueX: 1, valueY: 0))
+//                moves.append(Move(valueX: 2, valueY: 0))
+//                moves.append(Move(valueX: 3, valueY: 0))
+//                moves.append(Move(valueX: 4, valueY: 0))
+//                moves.append(Move(valueX: 5, valueY: 0))
+//                moves.append(Move(valueX: 6, valueY: 0))
+//                moves.append(Move(valueX: 7, valueY: 0))
+//
+//                moves.append(Move(valueX: -0, valueY: 0))
+//                moves.append(Move(valueX: -1, valueY: 0))
+//                moves.append(Move(valueX: -2, valueY: 0))
+//                moves.append(Move(valueX: -3, valueY: 0))
+//                moves.append(Move(valueX: -4, valueY: 0))
+//                moves.append(Move(valueX: -5, valueY: 0))
+//                moves.append(Move(valueX: -6, valueY: 0))
+//                moves.append(Move(valueX: -7, valueY: 0))
                 break
             }
             break
@@ -438,5 +460,5 @@ public enum ChessType: String {
 }
 
 protocol ChessManDelegate {
-    func setupAllMove(chessman: ChessManView, moves: [Move])
+    func setupAllMove(chessman: ChessManView, moves: [[Move]])
 }

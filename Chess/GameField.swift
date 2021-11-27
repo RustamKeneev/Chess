@@ -224,22 +224,43 @@ class GameField: UIView {
                 self.selectChessmens = nil
             }
         }
-        
-        print("test")
     }
 }
 
 extension GameField: ChessManDelegate {
-    func setupAllMove(chessman: ChessManView, moves: [Move]) {
+    func setupAllMove(chessman: ChessManView, moves: [[Move]]) {
+        moves.forEach { move in
+            checkPositions(chessman: chessman, moves: move)
+        }
+    }
+    
+    private func checkPositions(chessman: ChessManView, moves: [Move]) {
         let coordinate = getCoordinateChassMan(chessman: chessman)
         
-        moves.forEach { move in
-            let coordinateMove = Move(valueX: coordinate.0 - move.valueX, valueY: coordinate.1 - move.valueY)
-            
-            let cell = getCell(x: coordinateMove.valueX, y: coordinateMove.valueY)
-            
-            cell?.layer.borderColor = UIColor.red.cgColor
-            cell?.layer.borderWidth = 4
+        if chessman.chessType == .horse {
+            for move in moves {
+                let coordinateMove = Move(valueX: coordinate.0 - move.valueX, valueY: coordinate.1 - move.valueY)
+                
+                let cell = getCell(x: coordinateMove.valueX, y: coordinateMove.valueY)
+                
+                if (cell?.viewWithTag(1) as? ChessManView) == nil {
+                    cell?.layer.borderColor = UIColor.red.cgColor
+                    cell?.layer.borderWidth = 4
+                }
+            }
+        } else {
+            for move in moves {
+                let coordinateMove = Move(valueX: coordinate.0 - move.valueX, valueY: coordinate.1 - move.valueY)
+                
+                let cell = getCell(x: coordinateMove.valueX, y: coordinateMove.valueY)
+                
+                if (cell?.viewWithTag(1) as? ChessManView) != nil {
+                    break
+                } else {
+                    cell?.layer.borderColor = UIColor.red.cgColor
+                    cell?.layer.borderWidth = 4
+                }
+            }
         }
     }
 }
