@@ -11,8 +11,7 @@ import SnapKit
 class GameController: UIViewController {
 
     private lazy var gameField: GameField = {
-        let view = GameField()
-        return view
+        return GameField()
     }()
     
     override func viewDidLoad() {
@@ -25,6 +24,7 @@ class GameController: UIViewController {
             make.center.equalToSuperview()
             make.height.equalTo(gameField.snp.width)
         }
+        
     }
 
 

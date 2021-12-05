@@ -24,6 +24,8 @@ class GameField: UIView {
     
     private var currentMoveChessKind = true
     
+    private var selectChessmens: ChessManView? = nil
+    
     override func layoutSubviews() {
         setupSizeCell()
         setupCell()
@@ -146,6 +148,18 @@ class GameField: UIView {
         createChess(x: 4, y: 7, kind: .white, chessType: .queen)
     }
     
+    func recreate() {
+        cellsWork.forEach { items in
+            items.layer.borderWidth = 0
+            items.layer.borderColor = UIColor.clear.cgColor
+            items.subviews.filter({$0.tag == 1}).forEach({$0.removeFromSuperview()})
+        }
+        isSelectCell = false
+        currentMoveChessKind = true
+        selectChessmens = nil
+        setupChessmens()
+    }
+    
     private func createChess(x: Int, y: Int , kind: Kind, chessType: ChessType) {
         let chessman = ChessManView(delegate: self, kind: kind, chessType: chessType)
         
@@ -156,14 +170,29 @@ class GameField: UIView {
             make.height.equalTo((height ?? 0.0))
         }
     }
-    
-    private var selectChessmens: ChessManView? = nil
-    
+        
     @objc func checkAction(sender: UITapGestureRecognizer) {
         let selectView = sender.view
         
-                
-        if (selectView?.viewWithTag(1) != nil && currentMoveChessKind == (selectView?.viewWithTag(1) as? ChessManView)?.types) {
+        if (selectChessmens?.types == (selectView?.viewWithTag(1) as? ChessManView)?.types) {
+            let chessman = selectView?.viewWithTag(1) as? ChessManView
+                        
+            isSelectCell = true
+            
+            cellsWork.forEach { cell in
+                cell.layer.borderWidth = 0
+                cell.layer.borderColor = UIColor.clear.cgColor
+            }
+            
+            selectChessmens = chessman
+            
+            selectChessmens?.select(reselect: false)
+            
+            if chessman != nil {
+                selectView?.layer.borderColor = UIColor.green.cgColor
+                selectView?.layer.borderWidth = 4
+            }
+        } else if (selectView?.viewWithTag(1) != nil && currentMoveChessKind == (selectView?.viewWithTag(1) as? ChessManView)?.types) && selectChessmens == nil {
             let chessman = selectView?.viewWithTag(1) as? ChessManView
             
             if chessman?.types == currentMoveChessKind {
@@ -183,12 +212,11 @@ class GameField: UIView {
                 selectView?.layer.borderColor = UIColor.green.cgColor
                 selectView?.layer.borderWidth = 4
             }
-        } else if isSelectCell && (selectView?.viewWithTag(1) as? ChessManView)?.types == selectChessmens?.types {
+        } else if isSelectCell && (selectView?.viewWithTag(1) as? ChessManView)?.types != selectChessmens?.types && (sender.view?.layer.borderWidth ?? 0) == 4.0 && (sender.view?.layer.borderColor) == UIColor.red.cgColor {
             isSelectCell = false
             
-            if let view = (selectView?.viewWithTag(1) as? ChessManView) {
-                selectView?.willRemoveSubview(view)
-            }
+            selectView?.subviews.filter({$0.tag == 1}).forEach({$0.removeFromSuperview()})
+            
             
             if let selectChessmens = selectChessmens {
                 selectView?.addSubview(selectChessmens)
@@ -242,11 +270,62 @@ extension GameField: ChessManDelegate {
                 let coordinateMove = Move(valueX: coordinate.0 - move.valueX, valueY: coordinate.1 - move.valueY)
                 
                 let cell = getCell(x: coordinateMove.valueX, y: coordinateMove.valueY)
-                
-                if (cell?.viewWithTag(1) as? ChessManView) == nil {
+                let csChessMan = cell?.viewWithTag(1) as? ChessManView
+
+                if csChessMan != nil && csChessMan?.types != chessman.types {
+                    cell?.layer.borderColor = UIColor.red.cgColor
+                    cell?.layer.borderWidth = 4
+                    
+                } else if (cell?.viewWithTag(1) as? ChessManView) == nil {
                     cell?.layer.borderColor = UIColor.red.cgColor
                     cell?.layer.borderWidth = 4
                 }
+            }
+        } else if chessman.chessType == .pawn {
+            for move in moves {
+                let coordinateMove = Move(valueX: coordinate.0 - move.valueX, valueY: coordinate.1 - move.valueY)
+                
+                let cell = getCell(x: coordinateMove.valueX, y: coordinateMove.valueY)
+                
+                let csChessMan = cell?.viewWithTag(1) as? ChessManView
+                
+                if csChessMan != nil {
+                    break
+                } else {
+                    cell?.layer.borderColor = UIColor.red.cgColor
+                    cell?.layer.borderWidth = 4
+                }
+            }
+            
+            switch chessman.kind {
+            case .black:
+                let cellTargetOne = getCell(x: coordinate.0 - 1, y: coordinate.1 + 1)
+                let cellTargetTwo = getCell(x: coordinate.0 + 1, y: coordinate.1 + 1)
+
+                if (cellTargetOne?.viewWithTag(1) as? ChessManView != nil && (cellTargetOne?.viewWithTag(1) as? ChessManView)?.types != chessman.types) {
+                    cellTargetOne?.layer.borderColor = UIColor.red.cgColor
+                    cellTargetOne?.layer.borderWidth = 4
+                }
+                
+                if (cellTargetTwo?.viewWithTag(1) as? ChessManView != nil && (cellTargetOne?.viewWithTag(1) as? ChessManView)?.types != chessman.types) {
+                    cellTargetTwo?.layer.borderColor = UIColor.red.cgColor
+                    cellTargetTwo?.layer.borderWidth = 4
+                }
+                break
+            case .white:
+                let cellTargetOne = getCell(x: coordinate.0 - 1, y: coordinate.1 - 1)
+                let cellTargetTwo = getCell(x: coordinate.0 + 1, y: coordinate.1 - 1)
+
+                if (cellTargetOne?.viewWithTag(1) as? ChessManView != nil && (cellTargetOne?.viewWithTag(1) as? ChessManView)?.types != chessman.types) {
+                    cellTargetOne?.layer.borderColor = UIColor.red.cgColor
+                    cellTargetOne?.layer.borderWidth = 4
+                }
+                
+                if (cellTargetTwo?.viewWithTag(1) as? ChessManView != nil && (cellTargetOne?.viewWithTag(1) as? ChessManView)?.types != chessman.types) {
+                    cellTargetTwo?.layer.borderColor = UIColor.red.cgColor
+                    cellTargetTwo?.layer.borderWidth = 4
+                }
+                break
             }
         } else {
             for move in moves {
@@ -254,7 +333,14 @@ extension GameField: ChessManDelegate {
                 
                 let cell = getCell(x: coordinateMove.valueX, y: coordinateMove.valueY)
                 
-                if (cell?.viewWithTag(1) as? ChessManView) != nil {
+                let csChessMan = cell?.viewWithTag(1) as? ChessManView
+                
+                if csChessMan != nil && csChessMan?.types != chessman.types {
+                    cell?.layer.borderColor = UIColor.red.cgColor
+                    cell?.layer.borderWidth = 4
+                    
+                    break
+                } else if csChessMan != nil {
                     break
                 } else {
                     cell?.layer.borderColor = UIColor.red.cgColor
@@ -264,3 +350,6 @@ extension GameField: ChessManDelegate {
         }
     }
 }
+
+
+// 1000 chess app
